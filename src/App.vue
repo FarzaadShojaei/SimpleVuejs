@@ -2,8 +2,14 @@
 <section>
 <h2>My Friends</h2>
 <ul>
-<FriendContact name="Manual Lorez" phone-number="424-8942" email-address="manuel@localhost.com" is-favorite="1"></FriendContact>
-<FriendContact name="JulieJoens" phone-number="20-249-24" email-address="julie@localhost.com" ></FriendContact>
+<FriendContact v-for="friend in friends" 
+:key="friend.id" 
+:id="friend.id"
+:name="friend.name"
+ :phone-number="friend.phone" 
+ :email-address="friend.email" 
+ :is-favorite="friend.isFavorite"
+ @toggle-favorite="toggleFavoriteStatus"></FriendContact>
 </ul>
 
 
@@ -21,18 +27,25 @@ import FriendContact from "./components/FriendContact.vue";
                     id: "manual",
                     name: "Manual Lorenz",
                     phone: "0123 45678 90",
-                    email: "manual@localhost.com"
+                    email: "manual@localhost.com",
+                    isFavorite:true
                 },
                 {
                     id: "julie",
                     name: "julie Jones",
                     phone: "0987 654421 21",
-                    email: "julie@localhost.com"
+                    email: "julie@localhost.com",
+                    isFavorite:false
                 },
-            ]
+            ],
         };
     },
-    methods: {},
+    methods: {
+        toggleFavoriteStatus(friendId){
+           const identifiedFriend= this.friends.find((friend) => friend.id === friendId);
+           identifiedFriend.isFavorite=!identifiedFriend.isFavorite;
+        }
+    },
     computed: {},
     components: { FriendContact }
 }
